@@ -1,0 +1,217 @@
+.TH SIMPLE_SHELL 1 "April 2026" "Holberton School" "User Commands"
+
+.SH NAME
+simple_shell \- minimal UNIX command interpreter
+
+.SH SYNOPSIS
+.B simple_shell
+
+.SH DESCRIPTION
+.B simple_shell
+is a simple UNIX command interpreter that reads commands from standard input,
+parses them, and executes programs using system calls.
+
+It is designed as an educational project to understand process creation,
+program execution, and basic shell behavior.
+
+The shell operates in both interactive and non-interactive modes.
+
+.SH INVOCATION
+When invoked, the shell reads commands from standard input.
+
+If input is from a terminal, it runs in interactive mode and displays a prompt.
+Otherwise, it executes commands non-interactively.
+
+.SH OPERATION (CORE BEHAVIOR - MANDATORY PART 0.1 TO 1.0)
+The shell performs the following steps in a loop:
+
+.RS
+.IP \(bu 2
+Display a prompt (interactive mode only)
+.IP \(bu 2
+Read a line from standard input
+.IP \(bu 2
+Split the input into tokens (basic parsing)
+.IP \(bu 2
+Search for the command in PATH if needed
+.IP \(bu 2
+Create a child process using fork(2)
+.IP \(bu 2
+Execute the command using execve(2)
+.IP \(bu 2
+Wait for the child process using wait(2)
+.RE
+
+.SH COMMAND EXECUTION
+Commands are executed using:
+.RS
+.IP \(bu 2
+Absolute paths (/bin/ls)
+.IP \(bu 2
+Relative paths (./program)
+.IP \(bu 2
+PATH resolution (search in environment PATH)
+.RE
+
+If a slash (/) is present in the command, PATH is not used.
+
+.SH BUILTIN COMMANDS (MANDATORY)
+The following built-in commands are implemented:
+
+.TP
+.B exit
+Exit the shell with an optional status code.
+
+.TP
+.B env
+Print the current environment variables.
+
+.SH ENVIRONMENT
+The shell inherits the environment from the parent process.
+
+The following variable is required:
+
+.TP
+.B PATH
+Colon-separated list of directories used to locate executables.
+
+.SH RETURN STATUS
+The shell returns the status of the last executed command.
+
+Standard values:
+
+.RS
+.IP 0
+Success
+.IP 126
+Command found but not executable
+.IP 127
+Command not found
+.RE
+
+.SH ERRORS
+Errors are printed to standard error.
+
+Common errors:
+
+.RS
+.IP \(bu 2
+Command not found
+.IP \(bu 2
+Permission denied
+.IP \(bu 2
+Execution failure
+.RE
+
+.SH SIGNALS
+The shell handles:
+
+.TP
+.B SIGINT (Ctrl+C)
+Does not terminate the shell; prints a new prompt.
+
+.SH INPUT/OUTPUT
+Input is read from standard input.
+Output is written to standard output.
+Errors are written to standard error.
+
+.SH LIMITATIONS (BASE PROJECT - 0.1 TO 1.0)
+The base implementation does NOT support:
+
+.RS
+.IP \(bu 2
+Pipelines (|)
+.IP \(bu 2
+Redirections (>, <, >>)
+.IP \(bu 2
+Command chaining (&&, ||)
+.IP \(bu 2
+Quoting and escaping
+.IP \(bu 2
+Environment variable expansion ($HOME)
+.IP \(bu 2
+Job control
+.RE
+
+.SH ADVANCED FEATURES (SEPARATE TASKS)
+The following features are implemented only in advanced stages of the project:
+
+.RS
+.IP \(bu 2
+Command separators (;)
+.IP \(bu 2
+Logical operators (&&, ||)
+.IP \(bu 2
+Alias management
+.IP \(bu 2
+Environment variable handling (setenv, unsetenv)
+.IP \(bu 2
+Built-in cd command
+.IP \(bu 2
+Comments (#)
+.IP \(bu 2
+Command history
+.IP \(bu 2
+File input execution
+.RE
+
+.SH FILES
+.TP
+simple_shell.c
+Main loop implementation
+
+.TP
+parser.c
+Tokenization and parsing
+
+.TP
+executor.c
+Command execution logic
+
+.TP
+path.c
+PATH resolution
+
+.TP
+builtins.c
+Built-in commands implementation
+
+.SH EXAMPLES
+Run interactively:
+.RS
+simple_shell
+.RE
+
+Non-interactive mode:
+.RS
+echo "ls -l" | ./simple_shell
+.RE
+
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2),
+.BR access (2)
+
+.SH AUTHORS
+Written as part of the Holberton School curriculum.
+
+.br
+Brice Fontaine
+.br
+Vadim Gavet
+
+.SH NOTES
+This project demonstrates:
+.RS
+.IP \(bu 2
+Process creation using fork
+.IP \(bu 2
+Program execution using execve
+.IP \(bu 2
+Basic shell parsing
+.IP \(bu 2
+Environment handling
+.RE
