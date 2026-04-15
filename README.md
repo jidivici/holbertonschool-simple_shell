@@ -83,8 +83,8 @@ PATH is required for command resolution.
 ---
 
 ## RETURN VALUE
-0    success  
-126  command found but not executable  
+0    success
+126  command found but not executable
 127  command not found
 
 ---
@@ -119,10 +119,10 @@ The following features are implemented in advanced stages:
 
 ## FILES
 
-simple_shell.c  main loop  
-parser.c        input parsing  
-executor.c      command execution  
-path.c          PATH resolution  
+simple_shell.c  main loop
+parser.c        input parsing
+executor.c      command execution
+path.c          PATH resolution
 builtins.c      built-in commands
 
 ---
