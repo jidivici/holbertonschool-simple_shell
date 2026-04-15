@@ -1,204 +1,165 @@
-# holbertonschool-simple_shell
+# SIMPLE_SHELL
 
-# Simple Shell
-
-## Description
-
-Le projet Simple Shell consiste à recréer un interpréteur de commandes minimal similaire à un shell Unix comme sh ou bash.
-
-Ce programme lit les commandes entrées par l’utilisateur, les analyse (parsing), puis les exécute en utilisant les appels système appropriés (fork, execve, wait, etc.).
+## NAME
+simple_shell - minimal UNIX command interpreter
 
 ---
 
-## Compilation
+## DESCRIPTION
+simple_shell is a minimal UNIX command interpreter developed as part of the Holberton School curriculum.
 
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-
----
-
-## Utilisation
-
-Mode interactif :
-./hsh
-
-Mode non interactif :
-echo "ls -l" | ./hsh
+The project aims to reproduce core shell behavior by implementing command execution, process creation, and environment handling using low-level UNIX system calls.
 
 ---
 
-## Fonctionnement global
-
-1. Afficher un prompt
-2. Lire l’entrée utilisateur
-3. Parser la ligne (tokenization)
-4. Vérifier si c’est une builtin
-5. Sinon :
-    - Chercher le chemin via PATH
-    - Créer un processus avec fork
-    - Exécuter avec execve
-6. Attendre la fin du processus avec wait
+## SYNOPSIS
+./simple_shell
 
 ---
 
-## Gestion des cas possibles
+## OPERATION
+The shell operates in a loop:
 
-### 1. Entrée utilisateur
+- display a prompt (interactive mode only)
+- read user input
+- tokenize input into arguments
+- resolve command path using PATH if necessary
+- create a child process using fork()
+- execute command using execve()
+- wait for process termination using wait()
 
-Cas valides :
+---
+
+## FEATURES (BASE PROJECT 0.1 → 1.0)
+
+### command execution
+The shell executes programs such as:
 - ls
-- ls -l /tmp
-- /bin/ls
-- echo hello
+- pwd
+- echo
 
-Cas à gérer :
-- Entrée vide ("")
-- Chaîne contenant uniquement des espaces
-- EOF (Ctrl + D)
-
-Comportement attendu :
-- Ignorer les entrées vides
-- Quitter proprement sur EOF
+Execution is performed using fork(), execve(), and wait().
 
 ---
 
-### 2. Parsing (tokenization)
+### path resolution
+If a command is not an absolute path, the shell searches it in PATH.
 
-Cas valides :
-- "ls -l" devient ["ls", "-l"]
-- "echo hello world" devient ["echo", "hello", "world"]
+PATH is a colon-separated list of directories used to locate executables.
 
-Cas limites :
-- Multiples espaces (ex: "ls     -l")
-- Tabs et retours à la ligne
-
-Solution :
-- Utiliser strtok avec les délimiteurs " \t\r\n"
+Examples:
+- ls → /bin/ls
+- /bin/ls → direct execution
 
 ---
 
-### 3. Builtins
+### interactive mode
+The shell displays a prompt and waits for user input in a loop.
 
-Builtins obligatoires :
+---
 
+### non-interactive mode
+The shell reads commands from pipes or files.
+
+Example:
+echo "ls -l" | ./simple_shell
+
+---
+
+### built-in commands
 exit
-- Quitte le shell
-- Peut prendre un argument (ex: exit 98)
-- Retourne le bon code de sortie
+- exits the shell
 
 env
-- Affiche toutes les variables d’environnement
+- prints environment variables
 
 ---
 
-### 4. Résolution du PATH
+## ENVIRONMENT
+The shell inherits the environment from the parent process.
 
-Cas valides :
-- ls doit être trouvé dans /bin/ls ou /usr/bin/ls
-
-Cas à gérer :
-- Commande inexistante (ex: fakecmd)
-- PATH vide ou NULL
-- Commande contenant déjà un chemin (ex: /bin/ls)
-
-Comportement attendu :
-- Si la commande contient "/", ne pas chercher dans PATH
-- Sinon, parcourir PATH et tester chaque dossier
-
-En cas d’échec :
-./hsh: 1: fakecmd: not found
+PATH is required for command resolution.
 
 ---
 
-### 5. Exécution (fork + execve)
-
-Cas valides :
-- Commande existante
-- Permissions correctes
-
-Cas à gérer :
-- fork échoue
-- execve échoue
-- Permission refusée
-
-Comportement :
-- fork crée un processus enfant
-- execve remplace l’image du processus
-- le parent attend avec wait ou waitpid
+## RETURN VALUE
+0    success  
+126  command found but not executable  
+127  command not found
 
 ---
 
-### 6. Gestion des erreurs
+## LIMITATIONS (BASE PROJECT ONLY)
 
-Cas à gérer :
-- Commande inconnue
-- Mauvais arguments
-- Erreurs système
+The base implementation does not support:
 
-Exemples :
-./hsh: 1: lszzz: not found
-Permission denied
-
-Le programme ne doit pas crash
+- pipes (|)
+- redirections (>, <, >>)
+- logical operators (&&, ||)
+- quoting and escaping
+- environment variable expansion ($HOME)
+- job control
 
 ---
 
-### 7. Gestion de la mémoire
+## ADVANCED FEATURES (SEPARATE TASKS)
 
-À vérifier :
-- Libérer la mémoire après chaque commande
-- Éviter les memory leaks
-- Free correctement les tableaux de strings
+The following features are implemented in advanced stages:
 
-Fonctions utiles :
-- free
-- malloc
-- strdup
-
----
-
-### 8. Variables d’environnement
-
-Fonctionnalités :
-- Accéder à PATH via getenv ou env
-- Utiliser execve avec env
-
-Cas à gérer :
-- PATH inexistant
-- Variables mal formées
+- command separators (;)
+- logical operators (&&, ||)
+- cd builtin
+- setenv / unsetenv
+- aliases
+- comments (#)
+- command history
+- file input execution
 
 ---
 
-### 9. Mode interactif vs non interactif
+## FILES
 
-Interactif :
-- Affiche un prompt
-- Attend les entrées utilisateur
-
-Non interactif :
-- Lit depuis stdin (pipe ou fichier)
-- N’affiche pas de prompt
+simple_shell.c  main loop  
+parser.c        input parsing  
+executor.c      command execution  
+path.c          PATH resolution  
+builtins.c      built-in commands
 
 ---
 
-### 10. Cas avancés (optionnels selon projet)
+## EXAMPLES
 
-- Gestion des signaux (Ctrl + C)
-- Gestion des pipes (|)
-- Redirections (>, <, >>)
-- Variables ($HOME, $PATH)
-- Historique des commandes
+interactive mode:
+./simple_shell
 
----
+non-interactive mode:
+echo "ls -l" | ./simple_shell
 
-## Contraintes
-
-- Utiliser uniquement les fonctions autorisées
-- Respecter la norme de code
-- Pas de memory leaks
-- Code modulaire et lisible
+built-ins:
+exit
+env
 
 ---
 
-## Auteurs
+## SIGNALS
 
-Projet réalisé dans le cadre de la formation en programmation système.
+SIGINT (Ctrl+C)
+does not terminate the shell
+prints a new prompt
+
+---
+
+## AUTHORS
+Brice Fontaine
+Vadim Gavet
+
+---
+
+## NOTES
+This project demonstrates:
+
+- process creation (fork)
+- program execution (execve)
+- command parsing
+- environment handling
+- memory management
