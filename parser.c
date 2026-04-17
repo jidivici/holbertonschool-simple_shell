@@ -1,9 +1,9 @@
-#include <simple_shell.h>
+#include "simple_shell.h"
 /**
- * parser - Tokenizations of stdin line
- * @line: The stdin
+ * parser - Splits a string into an array of tokens
+ * @line: The input string to tokenize
  *
- * Return: A tab of string pointers
+ * Return: NULL-terminated array of strings, or NULL on failure
  */
 char **parser(char *line)
 {

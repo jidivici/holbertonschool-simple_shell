@@ -1,37 +1,45 @@
-#include <simple_shell.h>
+#include "simple_shell.h"
 /**
- * main: Read the code
+ * main - Read the code
  * @ac: Argument count
  * @av: Argument value
- * 
+ *
  * Return : O on sucess
  */
 int main(int ac, char **av)
 {
-	int i = 0, j = 0;
-	pid_t my_pid;
-	pid_t my_ppid;
 	char *line = NULL;
 	size_t len = 0;
-	char **cmd;
+	char **tokens;
+	(void)ac;
+	(void)av;
 
-	printf("----------------------------------------\n");
-
-	while (av[i])
-	{
-		printf("[argv %d] : %s\n", i, av[i]);
-		i++;
-	}
-	printf("----------------------------------------\n");
 	printf("$ ");
 
 	while (getline(&line, &len, stdin) != -1)
 	{
-		cmd = parser(line);
-		printf("%s", cmd[1]);
+		tokens = parser(line);
+		if (!tokens[0])
+		{
+			free(tokens);
+			printf("$ ");
+			continue;
+		}
+		if (tokens[0][0] != '/')
+		{
+			tokens[0] = build_path(tokens[0]);
+			if (!tokens[0])
+			{
+				free(tokens);
+				printf("$ ");
+				continue;
+			}
+		}
+		execute(tokens);
+		free(tokens);
 		printf("$ ");
+	
 	}
-
-	free (line);
+	free(line);
 	return (0);
 }
