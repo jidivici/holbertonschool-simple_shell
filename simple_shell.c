@@ -11,13 +11,12 @@ int main(int ac, char **av)
 	char *line = NULL;
         int interactive = isatty(STDIN_FILENO);
 	size_t len = 0;
-        int line_get;
 	char **tokens;
 	(void)ac;
 	(void)av;
 
         if (interactive)
-		printf("$ ");
+		write (1, "$ ", 2);
 	while (getline(&line, &len, stdin) != -1)
 	{
 		tokens = parser(line);
@@ -25,7 +24,7 @@ int main(int ac, char **av)
 		{
 			free(tokens);
                         if (interactive)
-				printf("$ ");
+                        	write (1, "$ ", 2);
 			continue;
 		}
 		if (tokens[0][0] != '/')
@@ -35,14 +34,14 @@ int main(int ac, char **av)
 			{
 				free(tokens);
                                 if (interactive)
-                                	printf("$ ");
+                                	write (1, "$ ", 2);
 				continue;
 			}
 		}
 		execute(tokens);
 		free(tokens);
                 if (interactive)
-			printf("$ ");
+                	write (1, "$ ", 2);
 	}
 	free(line);
 	return (0);
