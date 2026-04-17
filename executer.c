@@ -2,7 +2,6 @@
 /**
  * execute - forks and executes a command
  * @tokens: NULL-terminated array of arguments
- * @prog_name: name of the shell program for error messages
  *
  * Return: Nothing
  */
