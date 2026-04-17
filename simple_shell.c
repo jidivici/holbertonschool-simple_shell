@@ -18,7 +18,7 @@ int main(int ac, char **av)
 
         if (interactive)
 		printf("$ ");
-	while ((line_get = (getline(&line, &len, stdin)) != -1))
+	while (getline(&line, &len, stdin) != -1)
 	{
 		tokens = parser(line);
 		if (!tokens[0])
@@ -44,8 +44,6 @@ int main(int ac, char **av)
                 if (interactive)
 			printf("$ ");
 	}
-	if (line_get == -1 && !interactive)
-		printf("\n");
 	free(line);
 	return (0);
 }
