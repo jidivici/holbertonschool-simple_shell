@@ -9,20 +9,23 @@
 int main(int ac, char **av)
 {
 	char *line = NULL;
+        int interactive = isatty(STDIN_FILENO);
 	size_t len = 0;
+        int line_get;
 	char **tokens;
 	(void)ac;
 	(void)av;
 
-	printf("$ ");
-
-	while (getline(&line, &len, stdin) != -1)
+        if (interactive)
+		printf("$ ");
+	while ((line_get = (getline(&line, &len, stdin)) != -1))
 	{
 		tokens = parser(line);
 		if (!tokens[0])
 		{
 			free(tokens);
-			printf("$ ");
+                        if (interactive)
+				printf("$ ");
 			continue;
 		}
 		if (tokens[0][0] != '/')
@@ -31,15 +34,18 @@ int main(int ac, char **av)
 			if (!tokens[0])
 			{
 				free(tokens);
-				printf("$ ");
+                                if (interactive)
+                                	printf("$ ");
 				continue;
 			}
 		}
 		execute(tokens);
 		free(tokens);
-		printf("$ ");
-	
+                if (interactive)
+			printf("$ ");
 	}
+	if (line_get == -1 && !interactive)
+		printf("\n");
 	free(line);
 	return (0);
 }
