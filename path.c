@@ -57,3 +57,16 @@ char *build_path(char *command)
 	free(path_cpy);
 	return (NULL);
 }
+/**
+ * resolve_command - Determines if a command exists and where
+ * @cmd: The command
+ * @prog_name: Program name
+ * @line_count: The line counter
+ *
+ * Return: The path of the command or NULL
+ */
+char *resolve_command(char *cmd, char *prog_name, int line_count)
+{
+	
+}
+
