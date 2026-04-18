@@ -16,16 +16,16 @@ int main(int ac, char **av)
 
 	if (interactive)
 		write(1, "$ ", 2);
-	
-	while(getline(&line, &len, stdin) != -1)
+
+	while (getline(&line, &len, stdin) != -1)
 	{
 		tokens = parser(line);
 		if (!tokens[0])
 		{
 			free(tokens);
 			if (interactive)
-        			write(1, "$ ", 2);
-    			continue;
+				write(1, "$ ", 2);
+			continue;
 		}
 		status = execute(tokens, av[0]);
 		free(tokens);
