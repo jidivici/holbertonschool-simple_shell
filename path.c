@@ -79,7 +79,7 @@ char *resolve_command(char *cmd, char *prog_name, int line_count)
 	path = build_path(cmd);
 	if (!path)
 	{
-		dprintf(STDERR_FILENO, "%s: No such file or directory\n",
+		fprintf(stderr, "%s: No such file or directory\n",
 			prog_name);
 		return (NULL);
 	}
