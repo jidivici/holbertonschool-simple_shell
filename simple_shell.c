@@ -9,7 +9,7 @@
 int main(int ac, char **av)
 {
 	char *line = NULL;
-	int interactive = isatty(STDIN_FILENO);
+	int interactive = isatty(STDIN_FILENO), status = 0;
 	size_t len = 0;
 	char **tokens;
 	(void)ac;
@@ -27,11 +27,11 @@ int main(int ac, char **av)
         			printf("$ ");
     			continue;
 		}
-		execute(tokens, av[0]);
+		status = execute(tokens, av[0]);
 		free(tokens);
 		if (interactive)
 			printf("$ ");
 	}
 	free(line);
-	return (0);
+	return (status);
 }
