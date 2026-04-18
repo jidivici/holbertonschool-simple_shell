@@ -15,7 +15,7 @@ int main(int ac, char **av)
 	(void)ac;
 
 	if (interactive)
-		printf("$ ");
+		write(1, "$ ", 2);
 	
 	while(getline(&line, &len, stdin) != -1)
 	{
@@ -30,7 +30,7 @@ int main(int ac, char **av)
 		status = execute(tokens, av[0]);
 		free(tokens);
 		if (interactive)
-			printf("$ ");
+			write(1, "$ ", 2);
 	}
 	free(line);
 	return (status);
