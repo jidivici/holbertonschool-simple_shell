@@ -14,8 +14,9 @@
 extern char **environ;
 
 char **parser(char *line);
-char *build_path(char *command);
+char *build_path(char *cmd);
 char *_getenv(const char *name);
 void execute(char **tokens, char *prog_name, int line_count);
+char *resolve_command(char *cmd, char *prog_name, int line_count);
 
 #endif
