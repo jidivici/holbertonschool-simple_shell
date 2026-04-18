@@ -24,7 +24,7 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 /**
- * *build_path - Search for a command in the PATH directories
+ * build_path - Search for a command in the PATH directories
  * @cmd: The command name to find
  *
  * Return: Full path of the command if found, NULL otherwise
@@ -79,10 +79,9 @@ char *resolve_command(char *cmd, char *prog_name, int line_count)
 	path = build_path(cmd);
 	if (!path)
 	{
-		fprintf(stderr, "%s: No such file or directory\n",
-			prog_name);
+		fprintf(stderr, "%s: %d: %s: not found\n",
+			prog_name, line_count, cmd);
 		return (NULL);
 	}
 	return (path);
 }
-

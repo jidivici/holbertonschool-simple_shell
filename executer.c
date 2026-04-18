@@ -7,7 +7,7 @@
  *
  * Return: Nothing
  */
-void execute(char **tokens, char *prog_name, int line_count)
+void execute(char **tokens, char *prog_name)
 {
 	pid_t pid;
 

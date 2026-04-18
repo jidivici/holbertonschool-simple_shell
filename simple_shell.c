@@ -35,7 +35,7 @@ int main(int ac, char **av)
 				write(1, "$ ", 2);
 			continue;
 		}
-		execute(tokens, av[0], line_count);
+		execute(tokens, av[0]);
 		free(tokens[0]);
 		free(tokens);
 		if (interactive)
