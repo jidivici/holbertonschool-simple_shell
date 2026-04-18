@@ -7,9 +7,10 @@
  *
  * Return: Nothing
  */
-void execute(char **tokens, char *prog_name, int line_count)
+int execute(char **tokens, char *prog_name, int line_count)
 {
 	pid_t pid;
+	int status;
 
 	pid = fork();
 	if (pid == 0)
@@ -21,6 +22,9 @@ void execute(char **tokens, char *prog_name, int line_count)
 	}
 	else
 	{
-		wait(NULL);
+		wait(&status);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+		return (1);
 	}
 }

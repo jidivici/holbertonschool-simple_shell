@@ -4,12 +4,12 @@
  * @ac: Argument count
  * @av: Argument value
  *
- * Return: O on sucess
+ * Return: status
  */
 int main(int ac, char **av)
 {
 	char *line = NULL;
-	int interactive = isatty(STDIN_FILENO), line_count = 0;
+	int interactive = isatty(STDIN_FILENO), line_count = 0, status = 0;
 	size_t len = 0;
 	char **tokens;
 	(void)ac;
@@ -33,14 +33,15 @@ int main(int ac, char **av)
 			free(tokens);
 			if (interactive)
 				write(1, "$ ", 2);
+			status = 127;
 			continue;
 		}
-		execute(tokens, av[0], line_count);
+		status = execute(tokens, av[0], line_count);
 		free(tokens[0]);
 		free(tokens);
 		if (interactive)
 			write(1, "$ ", 2);
 	}
 	free(line);
-	return (0);
+	return (status);
 }
