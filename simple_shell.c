@@ -4,7 +4,7 @@
  * @ac: Argument count
  * @av: Argument value
  *
- * Return: 0
+ * Return: statut
  */
 int main(int ac, char **av)
 {
