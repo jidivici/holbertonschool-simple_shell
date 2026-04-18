@@ -30,10 +30,10 @@ int main(int ac, char **av)
 		tokens[0] = resolve_command(tokens[0], av[0], line_count);
 		if (!tokens[0])
 		{
-    			free(tokens);
-    			if (interactive)
-        			write(1, "$ ", 2);
-    			continue;
+			free(tokens);
+			if (interactive)
+				write(1, "$ ", 2);
+			continue;
 		}
 		execute(tokens, av[0], line_count);
 		free(tokens[0]);
