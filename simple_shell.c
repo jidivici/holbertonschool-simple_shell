@@ -24,7 +24,7 @@ int main(int ac, char **av)
 		{
 			free(tokens);
 			if (interactive)
-        			printf("$ ");
+        			write(1, "$ ", 2);
     			continue;
 		}
 		status = execute(tokens, av[0]);
