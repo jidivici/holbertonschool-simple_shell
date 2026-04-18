@@ -16,7 +16,7 @@ int execute(char **tokens, char *prog_name, int line_count)
 	if (pid == 0)
 	{
 		execve(tokens[0], tokens, environ);
-		fprintf(stderr, "%s: %d: %s: No such file or directory\n",
+		fprintf(stderr, "%s: %d: %s: not found\n",
 				prog_name, line_count, tokens[0]);
 		exit(127);
 	}
