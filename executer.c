@@ -2,7 +2,7 @@
 /**
  * execute - forks and executes a command
  * @tokens: NULL-terminated array of arguments
- * @prog_name: Name of the programm
+ * @prog_name: Name of the program
  * @line_count: The line the error is located
  *
  * Return: Nothing
