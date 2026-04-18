@@ -79,8 +79,8 @@ char *resolve_command(char *cmd, char *prog_name, int line_count)
 	path = build_path(cmd);
 	if (!path)
 	{
-		dprintf(STDERR_FILENO, "%s: line %d: %s: command not found\n",
-					prog_name, line_count, cmd);
+		dprintf(STDERR_FILENO, "%s: No such file or directory\n",
+			prog_name);
 		return (NULL);
 	}
 	return (path);

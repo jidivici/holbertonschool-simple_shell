@@ -15,8 +15,7 @@ void execute(char **tokens, char *prog_name, int line_count)
 	if (pid == 0)
 	{
 		execve(tokens[0], tokens, environ);
-		dprintf(STDERR_FILENO, "%s: line %d: %s: No such file or directory\n",
-			prog_name, line_count, tokens[0]);
+		perror(prog_name);
 		exit(127);
 	}
 	else
