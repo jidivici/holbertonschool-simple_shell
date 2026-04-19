@@ -29,5 +29,4 @@ int execute(char **tokens, char *prog_name, int line_count)
 			return (WEXITSTATUS(status));
 		return (1);
 	}
-
 }
