@@ -27,7 +27,17 @@ int main(int ac, char **av)
 				write(1, "$ ", 2);
 			continue;
 		}
-		status = execute(tokens, av[0]);
+		tokens[0] = resolve_command(tokens[0], av[0]);
+		if (!tokens[0])
+		{
+			free(tokens);
+			if (interactive)
+				write(1, "$ ", 2);
+			status = 127;
+			continue;
+		}
+		status = execute(tokens, av[0], line_count);
+		free(tokens[0]);
 		free(tokens);
 		if (interactive)
 			write(1, "$ ", 2);
