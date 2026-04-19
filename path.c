@@ -90,7 +90,6 @@ char *resolve_command(char *cmd, char *prog_name, int line_count)
 		return (NULL);
 	if (strchr(cmd, '/'))
 		return (strdup(cmd));
-
 	path = build_path(cmd);
 	return (path);
 }
