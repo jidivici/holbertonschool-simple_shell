@@ -3,7 +3,7 @@
  * execute - forks and executes a command
  * @tokens: NULL-terminated array of arguments
  * @prog_name: Name of the program
- * @line_count: variable
+ * @line_count: The line counter
  *
  * Return: Nothing
  */
