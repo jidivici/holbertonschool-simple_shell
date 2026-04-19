@@ -81,7 +81,7 @@ char *build_path(char *cmd)
  *
  * Return: The path of the command or NULL
  */
-char *resolve_command(char *cmd, char *prog_name, int line_count)
+char *resolve_command(char *cmd)
 {
 	char *path;
 
