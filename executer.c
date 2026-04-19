@@ -15,10 +15,10 @@ int execute(char **tokens, char *prog_name, int line_count)
 	if (pid == 0)
 	{
 		execve(tokens[0], tokens, environ);
+                fprintf(stderr, "%s: line %d: %s: %s\n",
+			prog_name, line_count, tokens[0], strerror(errno));
 		if (errno == EACCES)
 			exit(126);
-		fprintf(stderr, "%s: line %d: %s: No such file or directory\n",
-				prog_name, line_count, tokens[0]);
 		exit(127);
 	}
 	else
