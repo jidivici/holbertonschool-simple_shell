@@ -20,6 +20,7 @@ int main(int ac, char **av)
 
 	while (getline(&line, &len, stdin) != -1)
 	{
+		line_count += 1;
 		tokens = parser(line);
 		if (!tokens[0])
 		{
@@ -28,7 +29,7 @@ int main(int ac, char **av)
 				write(1, "$ ", 2);
 			continue;
 		}
-		tokens[0] = resolve_command(tokens[0], av[0]);
+		tokens[0] = resolve_command(tokens[0], av[0],  line_count);
 		if (!tokens[0])
 		{
 			free(tokens);

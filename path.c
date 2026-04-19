@@ -69,7 +69,7 @@ char *build_path(char *cmd)
  *
  * Return: The path of the command or NULL
  */
-char *resolve_command(char *cmd, char *prog_name)
+char *resolve_command(char *cmd, char *prog_name, int line_count)
 {
 	char *path;
 
@@ -78,8 +78,8 @@ char *resolve_command(char *cmd, char *prog_name)
 	path = build_path(cmd);
 	if (!path)
 	{
-		fprintf(stderr, "%s: %s: command not found\n",
-			prog_name, cmd);
+		fprintf(stderr, "%s: %d: %s: not found\n",
+			prog_name, line_count, cmd);
 		return (NULL);
 	}
 	return (path);
