@@ -24,29 +24,22 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 /**
- * build_path - Search for a command in the PATH directories
- * @cmd: The command name to find
+ * search_in_path - Searches for a command in the PATH directories
+ * @path: The PATH environment variable string
+ * @cmd: The command to search for
  *
  * Return: Full path of the command if found, NULL otherwise
  */
-char *build_path(char *cmd)
+char *search_in_path(char *path, char *cmd)
 {
-	char *path = _getenv("PATH");
-	char *path_cpy;
+	char *path_cpy = strdup(path);
 	char *dir;
 	char full_path[1024];
 	struct stat st;
 
-	if (!path)
-		return (NULL);
-
-	path_cpy = strdup(path);
-
 	if (!path_cpy)
 		return (NULL);
-
 	dir = strtok(path_cpy, ":");
-
 	while (dir)
 	{
 		strcpy(full_path, dir);
@@ -63,6 +56,25 @@ char *build_path(char *cmd)
 	return (NULL);
 }
 /**
+* build_path - Resolves a command using the PATH environment variable
+ * @cmd: The command name to resolve
+ *
+ * Return: Full path of the command if found, NULL otherwise
+ */
+char *build_path(char *cmd)
+{
+	char *path;
+
+	if (!cmd || cmd[0] == '\0')
+		return (NULL);
+	if (strchr(cmd, '/'))
+		return (strdup(cmd));
+	path = _getenv("PATH");
+	if (!path)
+		return (NULL);
+	return (search_in_path(path, cmd));
+}
+/**
  * resolve_command - Determines if a command exists and where
  * @cmd: The command
  * @prog_name: Program name
@@ -70,11 +82,14 @@ char *build_path(char *cmd)
  *
  * Return: The path of the command or NULL
  */
-char *resolve_command(char *cmd, char *prog_name)
+char *resolve_command(char *cmd, char *prog_name, int line_count)
 {
 	char *path;
 
-	if (cmd[0] == '/')
+	if (!cmd)
+		return (NULL);
+
+	if (cmd[0] == '/' || strchr(cmd, '/'))
 		return (strdup(cmd));
 	path = build_path(cmd);
 	if (!path)

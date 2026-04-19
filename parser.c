@@ -1,33 +1,59 @@
 #include "simple_shell.h"
+
 /**
- * parser - Splits a string into an array of tokens
- * @line: The input string to tokenize
+ * free_argv - Frees a NULL-terminated argv array
+ * @argv: array of strings
+ * @i: last valid index
+ */
+void free_argv(char **argv, int i)
+{
+	while (i >= 0)
+	{
+		free(argv[i]);
+		i--;
+	}
+	free(argv);
+}
+
+/**
+ * parser - Splits a command line into argv array
+ * @line: input string
  *
- * Return: NULL-terminated array of strings, or NULL on failure
+ * Return: NULL-terminated argv array or NULL on failure
  */
 char **parser(char *line)
 {
 	int capacity = 16;
 	int i = 0;
-	char **tokens = malloc(sizeof(char *) * capacity);
-	char *token;
+	char **argv = malloc(sizeof(char *) * capacity);
+	char **new_argv;
+	char *current_token;
 
-	if (!tokens)
+	if (!argv)
 		return (NULL);
-
-	token = strtok(line, " \n");
-
-	while (token)
+	current_token = strtok(line, " \n");
+	while (current_token)
 	{
 		if (i >= capacity - 1)
 		{
 			capacity *= 2;
-			tokens = realloc(tokens, sizeof(char *) * capacity);
+			new_argv = realloc(argv, sizeof(char *) * capacity);
+			if (!new_argv)
+			{
+				free_argv(argv, i - 1);
+				return (NULL);
+			}
+			argv = new_argv;
 		}
-		tokens[i] = token;
+		argv[i] = strdup(current_token);
+		if (!argv[i])
+		{
+			free_argv(argv, i - 1);
+			return (NULL);
+		}
 		i++;
-		token = strtok(NULL, " \n");
+		current_token = strtok(NULL, " \n");
 	}
-	tokens[i] = NULL;
-	return (tokens);
+	argv[i] = NULL;
+	return (argv);
 }
