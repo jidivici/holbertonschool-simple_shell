@@ -88,15 +88,9 @@ char *resolve_command(char *cmd, char *prog_name, int line_count)
 
 	if (!cmd)
 		return (NULL);
-
-	if (cmd[0] == '/' || strchr(cmd, '/'))
+	if (strchr(cmd, '/'))
 		return (strdup(cmd));
+
 	path = build_path(cmd);
-	if (!path)
-	{
-		fprintf(stderr, "%s: %s: command not found\n",
-			prog_name, cmd);
-		return (NULL);
-	}
 	return (path);
 }
