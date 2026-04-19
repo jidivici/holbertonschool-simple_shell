@@ -10,6 +10,7 @@ int main(int ac, char **av)
 {
 	char *line = NULL;
 	int interactive = isatty(STDIN_FILENO), status = 0;
+	int line_count = 0;
 	size_t len = 0;
 	char **tokens;
 	(void)ac;

@@ -66,7 +66,6 @@ char *build_path(char *cmd)
  * resolve_command - Determines if a command exists and where
  * @cmd: The command
  * @prog_name: Program name
- * @line_count: The line counter
  *
  * Return: The path of the command or NULL
  */

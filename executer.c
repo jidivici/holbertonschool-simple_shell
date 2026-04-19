@@ -3,10 +3,11 @@
  * execute - forks and executes a command
  * @tokens: NULL-terminated array of arguments
  * @prog_name: Name of the program
+ * @line_count: The line counter
  *
  * Return: Nothing
  */
-int execute(char **tokens, char *prog_name)
+int execute(char **tokens, char *prog_name, int line_count)
 {
 	pid_t pid;
 	int status;
