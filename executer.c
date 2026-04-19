@@ -3,6 +3,7 @@
  * execute - forks and executes a command
  * @tokens: NULL-terminated array of arguments
  * @prog_name: Name of the program
+ * @line_count: variable
  *
  * Return: Nothing
  */
@@ -15,7 +16,7 @@ int execute(char **tokens, char *prog_name, int line_count)
 	if (pid == 0)
 	{
 		execve(tokens[0], tokens, environ);
-                fprintf(stderr, "%s: line %d: %s: %s\n",
+		fprintf(stderr, "%s: line %d: %s: %s\n",
 			prog_name, line_count, tokens[0], strerror(errno));
 		if (errno == EACCES)
 			exit(126);
