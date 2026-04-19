@@ -15,7 +15,7 @@ char **parser(char *line)
 	if (!tokens)
 		return (NULL);
 
-	token = strtok(line, " \n");
+	token = strtok(line, " \t\n");
 
 	while (token)
 	{
@@ -26,7 +26,7 @@ char **parser(char *line)
 		}
 		tokens[i] = token;
 		i++;
-		token = strtok(NULL, " \n");
+		token = strtok(NULL, " \t\n");
 	}
 	tokens[i] = NULL;
 	return (tokens);
