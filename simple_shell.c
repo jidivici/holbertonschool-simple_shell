@@ -27,7 +27,7 @@ int main(int ac, char **av)
 				write(1, "$ ", 2);
 			continue;
 		}
-		tokens[0] = resolve_command(tokens[0], av[0], line_count);
+		tokens[0] = resolve_command(tokens[0], av[0]);
 		if (!tokens[0])
 		{
 			free(tokens);
