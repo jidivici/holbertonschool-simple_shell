@@ -23,7 +23,7 @@ int process_line(char *line, char **av, int line_count)
 	tokens[0] = build_path(tokens[0]);
 	if (!tokens[0])
 	{
-		fprintf(stderr, "%s: %d: %s: command not found\n",
+		fprintf(stderr, "%s: %d: %s: not found\n",
 			av[0], line_count, cmd);
 		free(tokens);
 		return (127);
