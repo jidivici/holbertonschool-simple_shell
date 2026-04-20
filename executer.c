@@ -10,15 +10,28 @@
 int execute(char **tokens, char *prog_name, int line_count)
 {
 	pid_t pid;
-	int status;
+	int status, saved_errno;
 
 	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return (1);
+	}
 	if (pid == 0)
 	{
 		execve(tokens[0], tokens, environ);
-		fprintf(stderr, "%s: line %d: %s: not found\n",
-			prog_name, line_count, tokens[0]);
-		if (errno == EACCES)
+		saved_errno = errno;
+		if (saved_errno == EISDIR)
+			fprintf(stderr, "%s: %d: %s: Is a directory\n",
+				 prog_name, line_count, tokens[0]);
+		else if (saved_errno == EACCES)
+			fprintf(stderr, "%s: %d: %s: Permission denied\n",
+				 prog_name, line_count, tokens[0]);
+		else
+			fprintf(stderr, "%s: %d: %s: not found\n",
+				 prog_name, line_count, tokens[0]);
+		if (saved_errno == EACCES || saved_errno == EISDIR)
 			exit(126);
 		exit(127);
 	}

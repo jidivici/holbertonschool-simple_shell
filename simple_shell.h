@@ -14,10 +14,10 @@
 extern char **environ;
 
 char **parser(char *line);
-char *build_path(char *cmd);
+char *resolve_cmd_path(char *cmd);
 char *_getenv(const char *name);
 int execute(char **tokens, char *prog_name, int line_count);
 int process_line(char *line, char **av, int line_count);
-char *search_in_path(char *path, char *cmd);
+char *find_exec_path(char *path, char *cmd);
 
 #endif
