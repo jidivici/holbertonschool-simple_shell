@@ -35,7 +35,6 @@ char *find_exec_path(char *path, char *cmd)
 	char *path_cpy = strdup(path);
 	char *dir;
 	char full_path[1024];
-	struct stat st;
 
 	if (!path_cpy)
 		return (NULL);
@@ -45,7 +44,7 @@ char *find_exec_path(char *path, char *cmd)
 		strcpy(full_path, dir);
 		strcat(full_path, "/");
 		strcat(full_path, cmd);
-		if (stat(full_path, &st) == 0)
+		if (access(full_path, X_OK) == 0)
 		{
 			free(path_cpy);
 			return (strdup(full_path));

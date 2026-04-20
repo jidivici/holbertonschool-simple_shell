@@ -15,7 +15,7 @@ char **parser(char *line)
 
 	if (!tokens_tab)
 		return (NULL);
-	new_token = strtok(line, " \n");
+	new_token = strtok(line, " \t\n");
 	while (new_token)
 	{
 		if (i >= capacity - 1)
@@ -34,7 +34,7 @@ char **parser(char *line)
 		}
 		tokens_tab[i] = new_token;
 		i++;
-		new_token = strtok(NULL, " \n");
+		new_token = strtok(NULL, " \t\n");
 	}
 	tokens_tab[i] = NULL;
 	return (tokens_tab);
