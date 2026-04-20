@@ -1,6 +1,6 @@
 #!/bin/bash
  
-SHELL="./hsh"
+SHELL="./a.out"
 SH="/bin/sh"
 PASS=0
 FAIL=0

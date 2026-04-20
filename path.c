@@ -74,21 +74,3 @@ char *build_path(char *cmd)
 		return (NULL);
 	return (search_in_path(path, cmd));
 }
-/**
- * resolve_command - Determines if a command exists and where
- * @cmd: The command
- * @prog_name: Program name
- *
- * Return: The path of the command or NULL
- */
-char *resolve_command(char *cmd, char *prog_name, int line_count)
-{
-	char *path;
-
-	if (!cmd)
-		return (NULL);
-	if (strchr(cmd, '/'))
-		return (strdup(cmd));
-	path = build_path(cmd);
-	return (path);
-}
