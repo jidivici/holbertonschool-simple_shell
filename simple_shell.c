@@ -14,10 +14,13 @@ int process_line(char *line, char **av, int line_count)
 	int status;
 
 	tokens = parser(line);
-	if (!tokens)
+	if (!tokens || !tokens[0])
+	{
+		free(tokens);
 		return (0);
+	}
 	cmd = tokens[0];
-	tokens[0] = resolve_command(tokens[0]);
+	tokens[0] = build_path(tokens[0]);
 	if (!tokens[0])
 	{
 		fprintf(stderr, "%s: line %d: %s: command not found\n",
