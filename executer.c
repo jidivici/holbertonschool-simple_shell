@@ -23,7 +23,7 @@ int execute(char **tokens, char *prog_name, int line_count)
 		execve(tokens[0], tokens, environ);
 		saved_errno = errno;
 		if (saved_errno == EISDIR)
-    			fprintf(stderr, "%s: %d: %s: Is a directory\n",
+			fprintf(stderr, "%s: %d: %s: Is a directory\n",
 				 prog_name, line_count, tokens[0]);
 		else if (saved_errno == EACCES)
 			fprintf(stderr, "%s: %d: %s: Permission denied\n",
