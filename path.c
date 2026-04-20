@@ -24,13 +24,13 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 /**
- * search_in_path - Searches for a command in the PATH directories
+ * find_exec_path - Searches for a command in the PATH directories
  * @path: The PATH environment variable string
  * @cmd: The command to search for
  *
  * Return: Full path of the command if found, NULL otherwise
  */
-char *search_in_path(char *path, char *cmd)
+char *find_exec_path(char *path, char *cmd)
 {
 	char *path_cpy = strdup(path);
 	char *dir;
@@ -56,21 +56,25 @@ char *search_in_path(char *path, char *cmd)
 	return (NULL);
 }
 /**
-* build_path - Resolves a command using the PATH environment variable
+* resolve_cmd_path - Resolves a command using the PATH environment variable
  * @cmd: The command name to resolve
  *
  * Return: Full path of the command if found, NULL otherwise
  */
-char *build_path(char *cmd)
+char *resolve_cmd_path(char *cmd)
 {
 	char *path;
 
 	if (!cmd || cmd[0] == '\0')
 		return (NULL);
 	if (strchr(cmd, '/'))
-		return (strdup(cmd));
+	{
+		if (access(cmd, X_OK) == 0)
+			return (strdup(cmd));
+		return (NULL);
+	}
 	path = _getenv("PATH");
 	if (!path)
 		return (NULL);
-	return (search_in_path(path, cmd));
+	return (find_exec_path(path, cmd));
 }
