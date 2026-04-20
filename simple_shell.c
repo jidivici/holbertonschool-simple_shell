@@ -19,6 +19,8 @@ int process_line(char *line, char **av, int line_count)
 		free(tokens);
 		return (0);
 	}
+	if (tokens[0] && strcmp(tokens[0], "exit") == 0)
+		builtins_exit(tokens);
 	cmd = tokens[0];
 	tokens[0] = resolve_cmd_path(tokens[0]);
 	if (!tokens[0])

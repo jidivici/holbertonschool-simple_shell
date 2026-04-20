@@ -19,5 +19,6 @@ char *_getenv(const char *name);
 int execute(char **tokens, char *prog_name, int line_count);
 int process_line(char *line, char **av, int line_count);
 char *find_exec_path(char *path, char *cmd);
+int builtins_exit(char **tokens);
 
 #endif
