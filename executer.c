@@ -10,15 +10,16 @@
 int execute(char **tokens, char *prog_name, int line_count)
 {
 	pid_t pid;
-	int status;
+	int status, saved_errno;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		execve(tokens[0], tokens, environ);
+		saved_errno = errno;
 		fprintf(stderr, "%s: line %d: %s: %s\n",
-			prog_name, line_count, tokens[0], strerror(errno));
-		if (errno == EACCES)
+			prog_name, line_count, tokens[0], strerror(saved_errno));
+		if (saved_errno == EACCES || saved_errno == EISDIR)
 			exit(126);
 		exit(127);
 	}
