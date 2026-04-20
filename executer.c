@@ -16,8 +16,8 @@ int execute(char **tokens, char *prog_name, int line_count)
 	if (pid == 0)
 	{
 		execve(tokens[0], tokens, environ);
-		fprintf(stderr, "%s: line %d: %s: %s\n",
-			prog_name, line_count, tokens[0], strerror(errno));
+		fprintf(stderr, "%s: line %d: %s: not found\n",
+			prog_name, line_count, tokens[0]);
 		if (errno == EACCES)
 			exit(126);
 		exit(127);
