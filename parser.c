@@ -9,30 +9,30 @@ char **parser(char *line)
 {
 	int capacity = 16;
 	int i = 0;
-	char **tokens = malloc(sizeof(char *) * capacity);
-	char *token;
+	char **tokens_tab = malloc(sizeof(char *) * capacity);
+	char *new_token;
 
-	if (!tokens)
+	if (!tokens_tab)
 		return (NULL);
 
-	token = strtok(line, " \n");
+	new_token = strtok(line, " \n");
 
-	while (token)
+	while (new_token)
 	{
 		if (i >= capacity - 1)
 		{
 			capacity *= 2;
-			tokens = realloc(tokens, sizeof(char *) * capacity);
-			if (!tokens)
+			tokens_tab = realloc(tokens_tab, sizeof(char *) * capacity);
+			if (!tokens_tab)
 			{
-				free(tokens);
+				free(tokens_tab);
 				return (NULL);
 			}
 		}
-		tokens[i] = token;
+		tokens_tab[i] = new_token;
 		i++;
-		token = strtok(NULL, " \n");
+		new_token = strtok(NULL, " \n");
 	}
-	tokens[i] = NULL;
-	return (tokens);
+	tokens_tab[i] = NULL;
+	return (tokens_tab);
 }
