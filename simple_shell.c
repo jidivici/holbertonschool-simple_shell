@@ -20,7 +20,7 @@ int process_line(char *line, char **av, int line_count)
 		return (0);
 	}
 	cmd = tokens[0];
-	tokens[0] = build_path(tokens[0]);
+	tokens[0] = resolve_cmd_path(tokens[0]);
 	if (!tokens[0])
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n",
