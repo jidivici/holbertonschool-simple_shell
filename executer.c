@@ -17,7 +17,7 @@ int execute(char **tokens, char *prog_name, int line_count)
 	{
 		execve(tokens[0], tokens, environ);
 		saved_errno = errno;
-		fprintf(stderr, "%s: line %d: %s: %s\n",
+		fprintf(stderr, "%s: %d: %s: %s\n",
 			prog_name, line_count, tokens[0], strerror(saved_errno));
 		if (saved_errno == EACCES || saved_errno == EISDIR)
 			exit(126);
