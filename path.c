@@ -67,7 +67,7 @@ char *resolve_cmd_path(char *cmd)
 	if (!cmd || cmd[0] == '\0')
 		return (NULL);
 	if (strchr(cmd, '/'))
-		return (strdup(cmd));
+		return (strdup(cmd)); 
 	path = _getenv("PATH");
 	if (!path)
 		return (NULL);
