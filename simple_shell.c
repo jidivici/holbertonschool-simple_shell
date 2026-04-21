@@ -9,10 +9,18 @@
  */
 int handle_builtins(char **tokens, char *line, int status)
 {
+	if (!tokens || !tokens[0])
+		return (0);
 	if (strcmp(tokens[0], "exit") == 0)
+	{
 		builtins_exit(tokens, line, status);
-	if (strcmp(tokens[0], "env") == 0)
-		return (builtins_env());
+                return (1);
+        }
+	else if (strcmp(tokens[0], "env") == 0)
+        {
+        	builtins_env();
+		return (1);
+        }
 	return (0);
 }
 /**
@@ -38,7 +46,6 @@ int process_line(char *line, char **av, int line_count, int status)
 	if (handle_builtins(tokens, line, status))
 	{
 		free(tokens);
-		free(line);
 		return (0);
 	}
 	cmd = tokens[0];
