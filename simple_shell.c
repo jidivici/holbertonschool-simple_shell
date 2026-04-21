@@ -35,7 +35,7 @@ int process_line(char *line, char **av, int line_count, int status)
 		free(tokens);
 		return (0);
 	}
-	if (!handle_builtins(tokens, line, status))
+	if (handle_builtins(tokens, line, status))
 	{
 		free(tokens);
 		free(line);
