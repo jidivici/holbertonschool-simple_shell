@@ -12,15 +12,9 @@ int handle_builtins(char **tokens, char *line, int status)
 	if (!tokens || !tokens[0])
 		return (0);
 	if (strcmp(tokens[0], "exit") == 0)
-	{
 		builtins_exit(tokens, line, status);
-                return (1);
-        }
 	else if (strcmp(tokens[0], "env") == 0)
-        {
-        	builtins_env();
-		return (1);
-        }
+		return (builtins_env());
 	return (0);
 }
 /**
