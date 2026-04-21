@@ -64,11 +64,13 @@ int builtins_env(void)
 {
 	int i = 0;
 
+	if (!environ)
+		return (1);
 	while (environ[i])
 	{
 		write(1, environ[i], strlen(environ[i]));
 		write(1, "\n", 1);
 		i++;
 	}
-	return (0);
+	return (1);
 }
