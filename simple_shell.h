@@ -17,8 +17,10 @@ char **parser(char *line);
 char *resolve_cmd_path(char *cmd);
 char *_getenv(const char *name);
 int execute(char **tokens, char *prog_name, int line_count);
-int process_line(char *line, char **av, int line_count, int last_status);
+int process_line(char *line, char **av, int line_count, int status);
 char *find_exec_path(char *path, char *cmd);
+int handle_builtins(char **tokens, char *line, int status);
 void builtins_exit(char **tokens, char *line, int status);
+int builtins_env(void);
 
 #endif
