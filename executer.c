@@ -43,10 +43,32 @@ int execute(char **tokens, char *prog_name, int line_count)
 		return (1);
 	}
 }
-
+/**
+ * builtins_exit - Exits the shell
+ * @tokens: Command arguments
+ * @line: Input command line
+ * @status: Exit status to use
+ */
 void builtins_exit(char **tokens, char *line, int status)
 {
 	free(tokens);
 	free(line);
 	exit(status);
+}
+/**
+ * builtins_env - Prints the current environment variables
+ *
+ * Return: 0 on success
+ */
+int builtins_env(void)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		write(1, environ[i], strlen(environ[i]));
+		write(1, "\n", 1);
+		i++;
+	}
+	return (0);
 }
