@@ -43,3 +43,13 @@ int execute(char **tokens, char *prog_name, int line_count)
 		return (1);
 	}
 }
+
+int builtins_exit(char **tokens)
+{
+	int exit_code = 0;
+
+	if (tokens[1])
+		exit_code = atoi(tokens[1]);
+	free(tokens);
+	exit(exit_code);
+}
