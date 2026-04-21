@@ -44,12 +44,9 @@ int execute(char **tokens, char *prog_name, int line_count)
 	}
 }
 
-int builtins_exit(char **tokens)
+void builtins_exit(char **tokens, char *line, int status)
 {
-	int exit_code = 0;
-
-	if (tokens[1])
-		exit_code = atoi(tokens[1]);
 	free(tokens);
-	exit(exit_code);
+	free(line);
+	exit(status);
 }

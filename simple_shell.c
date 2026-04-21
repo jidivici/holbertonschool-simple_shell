@@ -7,7 +7,7 @@
  *
  * Return: exit status
  */
-int process_line(char *line, char **av, int line_count)
+int process_line(char *line, char **av, int line_count, int last_status)
 {
 	char *cmd;
 	char **tokens;
@@ -20,7 +20,7 @@ int process_line(char *line, char **av, int line_count)
 		return (0);
 	}
 	if (tokens[0] && strcmp(tokens[0], "exit") == 0)
-		builtins_exit(tokens);
+		builtins_exit(tokens, line, last_status);
 	cmd = tokens[0];
 	tokens[0] = resolve_cmd_path(tokens[0]);
 	if (!tokens[0])
@@ -54,7 +54,7 @@ int main(int ac, char **av)
 	while (getline(&line, &len, stdin) != -1)
 	{
 		line_count += 1;
-		status = process_line(line, av, line_count);
+		status = process_line(line, av, line_count, status);
 		if (interactive)
 			write(1, "$ ", 2);
 	}
