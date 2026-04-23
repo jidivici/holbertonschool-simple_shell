@@ -66,7 +66,7 @@ echo "ls -l" | ./simple_shell
 
 ---
 
-### built-in commands
+### built-ins commands
 exit
 - exits the shell
 
@@ -102,7 +102,7 @@ The base implementation does not support:
 
 ---
 
-## ADVANCED FEATURES (SEPARATE TASKS)
+## ADVANCED FEATURES (SEPARATE TASKS NON IMPLEMENTED)
 
 The following features are implemented in advanced stages:
 
@@ -123,7 +123,6 @@ simple_shell.c  main loop
 parser.c        input parsing
 executor.c      command execution
 path.c          PATH resolution
-builtins.c      built-in commands
 
 ---
 
@@ -138,14 +137,6 @@ echo "ls -l" | ./simple_shell
 built-ins:
 exit
 env
-
----
-
-## SIGNALS
-
-SIGINT (Ctrl+C)
-does not terminate the shell
-prints a new prompt
 
 ---
 
