@@ -57,11 +57,11 @@ int process_line(char *line, char **av, int line_count, int status)
 	return (status);
 }
 /**
- * main - Read the code
- * @ac: Argument count
- * @av: Argument value
+ * main - Runs the shell loop until EOF or exit
+ * @ac: Argument count (unused)
+ * @av: Argument vector
  *
- * Return: status
+ * Return: Exit status of the last command executed
  */
 int main(int ac, char **av)
 {
